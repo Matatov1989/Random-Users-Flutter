@@ -10,11 +10,21 @@ class UserListScreen extends ConsumerStatefulWidget {
   _UserListScreenState createState() => _UserListScreenState();
 }
 
-class _UserListScreenState extends ConsumerState<UserListScreen> {
+class _UserListScreenState extends ConsumerState<UserListScreen> with RouteAware {
+
   @override
   void initState() {
     super.initState();
+    _updateAppBar();
+  }
 
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    _updateAppBar();
+  }
+
+  void _updateAppBar() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(appBarProvider.notifier).update(
         'User List',
@@ -37,13 +47,15 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
       body: usersAsyncValue.when(
         data: (users) => ListView.builder(
           itemCount: users.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (_, index) {
             final user = users[index];
             return ListTile(
               leading: Image.network(user.pictureUrl),
               title: Text(user.name),
               subtitle: Text(user.email),
-              onTap: () => context.go('/user_detail', extra: user),
+              onTap: () => {
+                context.go('/user_detail', extra: user)
+              },
             );
           },
         ),

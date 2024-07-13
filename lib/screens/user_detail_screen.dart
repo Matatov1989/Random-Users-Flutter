@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:random_users/models/user.dart';
 import 'package:random_users/providers/app_bar_provider.dart';
 
@@ -24,7 +25,7 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
         IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
       );
