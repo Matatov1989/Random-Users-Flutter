@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
 import '../models/user.dart';
 
-class Repository {
-  final Dio _dio;
-
-  Repository(this._dio);
+class UserService {
+  final Dio _dio = Dio();
 
   Future<List<User>> fetchUsers() async {
     final response = await _dio.get('https://randomuser.me/api/?results=10');
