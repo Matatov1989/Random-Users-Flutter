@@ -6,14 +6,13 @@ import 'package:random_users/presenters/user_list_presenter.dart';
 import 'package:random_users/repository/repository.dart';
 import 'package:random_users/views/user_list_view.dart';
 
-
-
 class UserListScreen extends StatefulWidget {
   @override
   _UserListScreenState createState() => _UserListScreenState();
 }
 
-class _UserListScreenState extends State<UserListScreen> implements UserListView {
+class _UserListScreenState extends State<UserListScreen>
+    implements UserListView {
   late UserListPresenter presenter;
   List<User> users = [];
   bool _isLoading = false;
@@ -39,22 +38,24 @@ class _UserListScreenState extends State<UserListScreen> implements UserListView
           ),
         ],
       ),
-      body: !_isLoading ? users.isEmpty
-          ? const Center(child: Text('No users found.'))
-          : ListView.builder(
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users[index];
-          return ListTile(
-            leading: Image.network(user.pictureUrl),
-            title: Text(user.name),
-            subtitle: Text(user.email),
-            onTap: () {
-              context.go('/user_detail', extra: user);
-            },
-          );
-        },
-      ) : Center(child: CircularProgressIndicator()),
+      body: !_isLoading
+          ? users.isEmpty
+              ? const Center(child: Text('No users found.'))
+              : ListView.builder(
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    final user = users[index];
+                    return ListTile(
+                      leading: Image.network(user.pictureUrl),
+                      title: Text(user.name),
+                      subtitle: Text(user.email),
+                      onTap: () {
+                        context.go('/user_detail', extra: user);
+                      },
+                    );
+                  },
+                )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 
@@ -67,7 +68,8 @@ class _UserListScreenState extends State<UserListScreen> implements UserListView
 
   @override
   void showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
