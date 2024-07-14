@@ -25,7 +25,7 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
         IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            context.pop();
+            GoRouter.of(context).pop();
           },
         ),
       );

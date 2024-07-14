@@ -10,17 +10,11 @@ class UserListScreen extends ConsumerStatefulWidget {
   _UserListScreenState createState() => _UserListScreenState();
 }
 
-class _UserListScreenState extends ConsumerState<UserListScreen> with RouteAware {
+class _UserListScreenState extends ConsumerState<UserListScreen> {
 
   @override
   void initState() {
     super.initState();
-    _updateAppBar();
-  }
-
-  @override
-  void didPopNext() {
-    super.didPopNext();
     _updateAppBar();
   }
 
@@ -54,7 +48,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> with RouteAware
               title: Text(user.name),
               subtitle: Text(user.email),
               onTap: () => {
-                context.go('/user_detail', extra: user)
+                GoRouter.of(context).go('/user_detail', extra: user)
               },
             );
           },
