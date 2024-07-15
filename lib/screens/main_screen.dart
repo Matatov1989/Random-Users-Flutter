@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:random_users/navigator/app_navigator.dart';
 import 'package:random_users/providers/app_bar_provider.dart';
 
-class AppBarWidget extends ConsumerWidget {
-  final Widget? child;
-
-  const AppBarWidget({required this.child});
-
+class MainScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appBarState = ref.watch(appBarProvider);
@@ -25,7 +22,7 @@ class AppBarWidget extends ConsumerWidget {
         ),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      body: child,
+      body: AppNavigator(),
     );
   }
 }

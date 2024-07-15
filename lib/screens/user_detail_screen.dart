@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:random_users/models/user.dart';
 import 'package:random_users/providers/app_bar_provider.dart';
-
 
 class UserDetailScreen extends ConsumerStatefulWidget {
   final User user;
@@ -19,16 +17,10 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(appBarProvider.notifier).update(
-        'User Detail',
-        null,
-        IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            GoRouter.of(context).pop();
-          },
-        ),
-      );
+      ref.read(appBarProvider.notifier).updateAppBar('Detail User', [],
+          leading: BackButton(onPressed: () {
+        Navigator.pop(context);
+      }));
     });
   }
 

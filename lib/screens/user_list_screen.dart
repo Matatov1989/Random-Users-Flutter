@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:random_users/providers/app_bar_provider.dart';
 import 'package:random_users/providers/user_provider.dart';
-
 
 class UserListScreen extends ConsumerStatefulWidget {
   @override
@@ -11,25 +9,16 @@ class UserListScreen extends ConsumerStatefulWidget {
 }
 
 class _UserListScreenState extends ConsumerState<UserListScreen> {
-
   @override
   void initState() {
     super.initState();
-    _updateAppBar();
-  }
-
-  void _updateAppBar() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(appBarProvider.notifier).update(
-        'User List',
-        [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () => ref.read(userListProvider.notifier).load(),
-          ),
-        ],
-        null,
-      );
+      ref.read(appBarProvider.notifier).updateAppBar('Users List', [
+        IconButton(
+          icon: Icon(Icons.refresh),
+          onPressed: () => ref.read(userListProvider.notifier).load(),
+        ),
+      ]);
     });
   }
 
@@ -48,7 +37,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
               title: Text(user.name),
               subtitle: Text(user.email),
               onTap: () => {
-                GoRouter.of(context).go('/user_detail', extra: user)
+                Navigator.pushNamed(context, '/user_detail', arguments: user)
               },
             );
           },
