@@ -17,12 +17,6 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
   void initState() {
     super.initState();
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   ref.read(appBarProvider.notifier).updateAppBar('Detail User', [],
-    //       leading: BackButton(onPressed: () {
-    //     Navigator.pop(context);
-    //   }));
-    // });
   }
 
   @override
@@ -50,6 +44,11 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
             SizedBox(height: 8),
             Text(
               widget.user.email,
+              style: TextStyle(fontSize: 18, color: Colors.grey[600], fontStyle: FontStyle.italic),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'There are ${widget.user.daysToNextBirthday} days left until your next birthday.',
               style: TextStyle(fontSize: 18, color: Colors.grey[600]),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:random_users/enums/age_sort.dart';
 import '../models/user.dart';
 import '../services/user_service.dart';
