@@ -29,7 +29,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              ref.read(userListProvider.notifier).load();
+              ref.read(userListProvider.notifier).load(true);
             },
           ),
           PopupMenuButton<AgeSort>(

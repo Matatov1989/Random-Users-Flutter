@@ -59,14 +59,21 @@ class UserDatabase {
 
     final result = await db.query('users');
 
-    return result.map((json) => User.fromMap({
-      'fullName': json['fullName'],
-      'email': json['email'],
-      'pictureUrl': json['pictureUrl'],
-      'dob': {
-        'date': json['date'],
-        'age': json['age'],
-      },
-    })).toList();
+    return result
+        .map((json) => User.fromMap({
+              'fullName': json['fullName'],
+              'email': json['email'],
+              'pictureUrl': json['pictureUrl'],
+              'dob': {
+                'date': json['date'],
+                'age': json['age'],
+              },
+            }))
+        .toList();
+  }
+
+  Future<void> clearTable() async {
+    final db = await instance.database;
+    await db.delete('users');
   }
 }

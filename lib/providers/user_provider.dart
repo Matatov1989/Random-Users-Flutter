@@ -20,16 +20,23 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<User>>> {
 
   UserListNotifier(this._userService, this._userDatabase)
       : super(const AsyncLoading()) {
-    load();
+    load(false);
   }
 
-  Future<void> load() async {
+  Future<void> load(bool isNewUsers) async {
+    List<User> users;
     try {
-      final users = await _userService.fetchUsers();
-      for (var user in users) {
-        await _userDatabase.insertUser(user);
+      if (isNewUsers) {
+        users = await _userService.fetchUsers();
+        await replaceLocalData(users);
+      } else {
+        users = await _userDatabase.fetchUsers();
+        if (users.isEmpty) {
+          users = await _userService.fetchUsers();
+          await replaceLocalData(users);
+        }
       }
-      // final storedUsers = await _userDatabase.fetchUsers();
+
       state = AsyncValue.data(users);
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
@@ -48,5 +55,12 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<User>>> {
       }
       state = AsyncValue.data(sortedUsers);
     });
+  }
+
+  Future<void> replaceLocalData(List<User> users) async {
+    await _userDatabase.clearTable();
+    for (var user in users) {
+      await _userDatabase.insertUser(user);
+    }
   }
 }
