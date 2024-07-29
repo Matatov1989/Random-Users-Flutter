@@ -59,7 +59,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
             final user = users[index];
             return ListTile(
               leading: Image.network(user.pictureUrl),
-              title: Text(user.name),
+              title: Text(user.fullName),
               subtitle: Text(user.email),
               onTap: () => {
                 Navigator.push(

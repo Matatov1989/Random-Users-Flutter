@@ -38,7 +38,7 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
             Image.network(widget.user.pictureUrl),
             SizedBox(height: 16),
             Text(
-              widget.user.name,
+              widget.user.fullName,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),

@@ -1,26 +1,35 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
+import 'package:random_users/database/user_database.dart';
 import 'package:random_users/enums/age_sort.dart';
 import '../models/user.dart';
 import '../services/user_service.dart';
 
 final userServiceProvider = Provider<UserService>((ref) => UserService());
+final userDatabaseProvider =
+    Provider<UserDatabase>((ref) => UserDatabase.instance);
 
 final userListProvider =
     StateNotifierProvider<UserListNotifier, AsyncValue<List<User>>>((ref) {
-  return UserListNotifier(ref.read(userServiceProvider));
+  return UserListNotifier(
+      ref.read(userServiceProvider), ref.read(userDatabaseProvider));
 });
 
 class UserListNotifier extends StateNotifier<AsyncValue<List<User>>> {
   final UserService _userService;
+  final UserDatabase _userDatabase;
 
-  UserListNotifier(this._userService) : super(const AsyncLoading()) {
+  UserListNotifier(this._userService, this._userDatabase)
+      : super(const AsyncLoading()) {
     load();
   }
 
   Future<void> load() async {
     try {
       final users = await _userService.fetchUsers();
+      for (var user in users) {
+        await _userDatabase.insertUser(user);
+      }
+      // final storedUsers = await _userDatabase.fetchUsers();
       state = AsyncValue.data(users);
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
