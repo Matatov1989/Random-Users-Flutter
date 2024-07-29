@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:random_users/models/user.dart';
-import 'package:random_users/providers/app_bar_provider.dart';
+import 'package:random_users/widgets/app_bar_widget.dart';
 
 class UserDetailScreen extends ConsumerStatefulWidget {
   final User user;
@@ -16,17 +16,26 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(appBarProvider.notifier).updateAppBar('Detail User', [],
-          leading: BackButton(onPressed: () {
-        Navigator.pop(context);
-      }));
-    });
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   ref.read(appBarProvider.notifier).updateAppBar('Detail User', [],
+    //       leading: BackButton(onPressed: () {
+    //     Navigator.pop(context);
+    //   }));
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarWidget(
+        title: 'Detail User',
+        leading: BackButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
