@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:random_users/enums/age_sort.dart';
 import 'package:random_users/providers/user_provider.dart';
 import 'package:random_users/screens/user_detail_screen.dart';
 import 'package:random_users/widgets/app_bar_widget.dart';
@@ -31,14 +32,18 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
               ref.read(userListProvider.notifier).load();
             },
           ),
-          PopupMenuButton<int>(
+          PopupMenuButton<AgeSort>(
             icon: const Icon(Icons.sort),
-            onSelected: (int value) {
+            onSelected: (AgeSort value) {
               print('Выбрано: $value');
+              ref.read(userListProvider.notifier).sortUsers(value);
             },
             itemBuilder: (BuildContext context) {
-              return <int, String>{0: 'by max age', 1: 'by min age'}.entries.map((entry) {
-                return PopupMenuItem<int>(
+              return <AgeSort, String>{
+                AgeSort.ageAsc: 'by max age',
+                AgeSort.ageDesc: 'by min age'
+              }.entries.map((entry) {
+                return PopupMenuItem<AgeSort>(
                   value: entry.key,
                   child: Text(entry.value),
                 );

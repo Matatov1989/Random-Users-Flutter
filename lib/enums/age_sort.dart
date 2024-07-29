@@ -1,0 +1,4 @@
+enum AgeSort {
+  ageAsc,
+  ageDesc;
+}
